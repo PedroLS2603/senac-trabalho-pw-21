@@ -3,11 +3,17 @@
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
         <meta charset="UTF-8">
+        <script src="script.js"></script>
     </head>
     <body>
         <div class="baralho">
             <div class="carta">
                 <p>B</p>
+            </div>
+            <div class="dealer" id="dealer">
+                <img src="images/base.jpg" width="200px" height="200px"  class="" id="Base" >
+                <img src="images/embaralhando.jpg" width="200px" height="200px" class="hidden" id="Embaralhando">
+                <img src="images/dando carta.jpg" width="200px" height="200px" class="hidden" id="DarCarta">
             </div>
         </div>
         <div class="streak">
@@ -15,7 +21,7 @@
             <button>Surrender</button>
             <p>0 W/ 0 L</p>
         </div>
-        <div class="campoCartas">
+        <div class="campoCartas" id="campo">
             <div class="carta">
                 <p>C</p>
             </div>
@@ -33,7 +39,7 @@
             </div>
         </div>
         <div class="comandosJogo">
-            <button>Hit</button>
+            <button onclick="pegarCarta()">Hit</button>
             <button>Stand</button>
         </div>
     </body>

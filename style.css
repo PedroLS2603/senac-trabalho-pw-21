@@ -18,6 +18,10 @@ button:hover {
     opacity: 1;
 }
 
+button:active {
+    background-color:  rgba(139,0 ,0);;
+}
+
 .comandosJogo{
     position: absolute;
     bottom: 100px;
@@ -71,8 +75,21 @@ button:hover {
 }
 
 .baralho {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     position: absolute;
     top: 20px;
     left: 50%;
     margin-left: -46px;
 }
+
+.hidden{
+    display:none;
+}
+
+.dealer {
+   
+    margin-left: 2vw;
+}
+
