@@ -9,23 +9,14 @@
 // comandos = hit/stand/surrender
 
 const baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'K', 'Q', 'J'];
-/* 
---NAIPES--
-0 -> ESPADAS
-1 -> COPAS
-2 -> PAUS
-3 -> OUROS
-*/
 const naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
 
 function getNomeDaCarta(carta, naipe) {
-    console.log(carta);
-    console.log(naipe);
     return `${carta} ${naipe}`;
 }
 
 function getNaipeAleatorio() {
-    let naipeAleatorio = Math.round(Math.random()*(naipe.length));
+    let naipeAleatorio = Math.floor(Math.random()*(naipe.length));
     if (naipeAleatorio < 0) {
         return naipe[0];
     }
@@ -33,7 +24,7 @@ function getNaipeAleatorio() {
 }
 
 function getCartaAleatoria() {
-    let cartaAleatoria = Math.round(Math.random()*(baralho.length));
+    let cartaAleatoria = Math.floor(Math.random()*(baralho.length));
     if (cartaAleatoria < 0) {
         return baralho[0];
     }
@@ -53,15 +44,29 @@ function hitMe() {
     return proximaCarta;
 }
 
+function stay() {
+
+}
+
 function surrender() {
     
 }
+
+function getTamanhoMao(maoDeAlguem) {
+    let soma;
+    for (let i = 0; i < maoDeAlguem.length; i++) {
+        //como eu faço pra atribuir o valor que quero pras letras?
+    }
+    return soma;
+}
+
 
 let maoJogador;
 let maoBot;
 
 maoJogador = getMaoInicial();
 maoBot = getMaoInicial();
-//aqui vai depender dos botoes pra saber qual a opção, não sei fazer essa porra
 
 console.log(maoJogador, maoBot);
+//pensando em como faço o bot pedir cartas enquanto a mao dele for menor que 17 e intercalar com as escolhas do jogador
+console.log(getTamanhoMao(maoBot));
