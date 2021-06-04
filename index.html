@@ -4,37 +4,37 @@
         <link rel="stylesheet" type="text/css" href="style.css">
         <meta charset="UTF-8">
     </head>
-    <body>
-        <div class="baralho">
-            <div class="carta">
-                <p>B</p>
-            </div>
+    <body onload="carregarBaralho()">
+        <div id="baralho">
+            
         </div>
-        <div class="streak">
+        <div class="streak" on>
             <button>Reset</button>
             <button>Surrender</button>
             <p>0 W/ 0 L</p>
         </div>
         <div class="campoCartas">
             <div class="carta">
-                <p>C</p>
+                <img src="images/naipeCopas.png">
+                <p>4</p>
             </div>
             <div class="carta">
-                <p>C</p>
+                <img src="images/naipePaus.png">
+                <p>3</p>
             </div>
             <div class="carta">
-                <p>C</p>
+                <img src="images/naipeEspadas.png">
+                <p>2</p>
             </div>
             <div class="carta">
-                <p>C</p>
-            </div>
-            <div class="carta">
-                <p>C</p>
+                <img src="images/naipeOuros.png">
+                <p>A</p>
             </div>
         </div>
         <div class="comandosJogo">
             <button>Hit</button>
             <button>Stand</button>
         </div>
+        <script src="script.js"></script>
     </body>
 </html>
