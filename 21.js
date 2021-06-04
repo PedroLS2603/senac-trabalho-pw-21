@@ -1,5 +1,4 @@
-//1 jogador e 1 bot
-//baralho de 52 cartas 
+//1 jogador e 1 bot 
 //-> valores: ás = 1 (11 se estiver na mao com k q ou j)
 //-> 10 k q e j = 10
 //-> as demais cartas são o número que estão nelas
@@ -17,7 +16,7 @@ const baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'K', 'Q', 'J'];
 2 -> PAUS
 3 -> OUROS
 */
-const naipe = [0, 1, 2, 3];
+const naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
 
 function getNomeDaCarta(carta, naipe) {
     console.log(carta);
@@ -27,6 +26,9 @@ function getNomeDaCarta(carta, naipe) {
 
 function getNaipeAleatorio() {
     let naipeAleatorio = Math.round(Math.random()*(naipe.length));
+    if (naipeAleatorio < 0) {
+        return naipe[0];
+    }
     return naipe[naipeAleatorio];
 }
 
@@ -42,7 +44,7 @@ function getCartaAleatoria() {
 function getMaoInicial() {
     let primeiraCarta = getNomeDaCarta(getCartaAleatoria(), getNaipeAleatorio());
     let segundaCarta = getNomeDaCarta(getCartaAleatoria(), getNaipeAleatorio());
-    return primeiraCarta, segundaCarta;
+    return [primeiraCarta, segundaCarta];
 }
 
 //da mais 1 carta
@@ -55,11 +57,11 @@ function surrender() {
     
 }
 
-let maoJogador = [];
-let maoBot = [];
+let maoJogador;
+let maoBot;
 
-maoJogador.push(getMaoInicial());
-maoBot.push(getMaoInicial());
+maoJogador = getMaoInicial();
+maoBot = getMaoInicial();
 //aqui vai depender dos botoes pra saber qual a opção, não sei fazer essa porra
 
 console.log(maoJogador, maoBot);
