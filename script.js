@@ -1,21 +1,24 @@
 function carregarBaralho() {
-    let styleLeftCarta = 0;
+    let positionTopCarta = 0;
+    let positionLeftCarta = 18;
     
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 1; i <= 5; i++) {
         const novaCarta = document.createElement('div');
         const naipe = document.createElement('img');
-        const numero = document.createElement('p');
+        const texto = document.createElement('p');
 
-        styleLeftCarta += 3;
+        positionTopCarta += 1;
+        positionLeftCarta -= 1;
 
         novaCarta.className = "carta";
 
 
-        naipe.src = "images/naipeEspadas.png";
-        numero.innerText = Math.floor(Math.random() * 10 + 1);
+        naipe.src = "images/coringa.png";
+        texto.innerText = "?";
 
         novaCarta.style.position = "absolute"
-        novaCarta.style.left = styleLeftCarta + "px"; 
+        novaCarta.style.top = positionTopCarta + "px"; 
+        novaCarta.style.left = positionLeftCarta + "px"; 
 
         document.getElementById('baralho').appendChild(novaCarta)
         
@@ -24,8 +27,8 @@ function carregarBaralho() {
         const lastCard = cartasBaralho[cartasBaralho.length - 1]
 
         lastCard.appendChild(naipe)
-        lastCard.appendChild(numero)
-        console.log(styleLeftCarta)
+        lastCard.appendChild(texto)
+
     }
 
 
