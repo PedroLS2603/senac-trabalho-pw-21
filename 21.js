@@ -13,7 +13,7 @@ var pontosBot = 0;
 var pontosJogador = 0;
 var maoJogador = [];
 var maoBot = [];
-let vencedor = '';
+let vencedorUltimaRodada = '';
 
 const baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'K', 'Q', 'J'];
 const naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
@@ -60,7 +60,7 @@ function stay() {
     }
 }
 
-//adiciona 1 ponto ao bot e troca as mãos
+//adiciona 1 ponto ao bot e zera as mãos
 function surrender() {
     pontosBot += 1;
     rodada = 1;
@@ -108,13 +108,61 @@ function reset() {
     maoBot = [];
 }
 
+function empate() {
+    maoBot = [];
+    maoJogador = [];
+    rodada = 1;
+}
+
 //vai verificar o vencedor para atribuir os pontos
-function getVencedor() {
-    if () {
-        //implementar a verificação de vitória
-        pontosJogador += 1;
+function getVencedor(jogador, bot) {
+    if (getTamanhoMao(maoJogador) > 21) {
+        if (getTamanhoMao(maoBot) > 21) {
+            if (maoJogador < maoBot) {
+                vencedorUltimaRodada = 'Jogador';
+                pontosJogador += 1;
+            } else {
+                vencedorUltimaRodada = 'Bot';
+                pontosBot += 1;
+            }
+        } else {
+            vencedorUltimaRodada = 'Bot';
+            pontosBot += 1;
+        }
+    } else if (getTamanhoMao(maoBot) > 21) {
+        if (getTamanhoMao(maoJogador) > 21) {
+            if (maoBot < maoJogador) {
+                vencedorUltimaRodada = 'Bot';
+                pontosBot += 1;
+            } else {
+                vencedorUltimaRodada = 'Jogador';
+                pontosJogador += 1;
+            }
+        } else {
+            vencedorUltimaRodada = 'Jogador';
+            pontosJogador += 1;
+        }
+    } else if (getTamanhoMao(maoJogador) == 21 || getTamanhoMao(maoBot) == 21) {
+        if (maoJogador == 21 && maoBot != 21) {
+            vencedorUltimaRodada = 'Jogador';
+            pontosJogador += 1;
+        } else if (maoBot == 21 && maoJogador != 21) {
+            vencedorUltimaRodada = 'Bot';
+            pontosBot += 1;
+        } else if (maoJogador == 21 && maoBot == 21) {
+            vencedorUltimaRodada = 'Empate';
+            empate();
+        }
     } else {
-        pontosBot += 1;
+        let tempJogador = 21 - getTamanhoMao(maoJogador);
+        let tempBot = 21 - getTamanhoMao(maoBot);
+        if (tempJogador > tempBot) {
+            vencedorUltimaRodada = 'Jogador';
+            pontosJogador += 1;
+        } else {
+            vencedorUltimaRodada = 'Bot';
+            pontosBot += 1;
+        }
     }
 }
 
