@@ -53,9 +53,26 @@ function surrender() {
 }
 
 function getTamanhoMao(maoDeAlguem) {
-    let soma;
+    let soma = 0;
+    let arrayAuxiliar = maoDeAlguem.slice();
     for (let i = 0; i < maoDeAlguem.length; i++) {
-        //como eu faço pra atribuir o valor que quero pras letras?
+        if (arrayAuxiliar[i][0] == 'K' || arrayAuxiliar[i][0] == 'Q' || arrayAuxiliar[i][0] == 'J') {
+            soma += 10;
+        } else if (arrayAuxiliar[i][0] == 'A') {
+            if (arrayAuxiliar.includes('K')) {
+                soma += 11;
+            } else if (arrayAuxiliar.includes('Q')) {
+                soma += 11;
+            } else if (arrayAuxiliar.includes('J')) {
+                soma += 11;
+            } else {
+                soma += 1;
+            }
+        } else if (arrayAuxiliar[i].includes(10)) {
+            soma += 10;
+        }else {
+            soma += parseInt(arrayAuxiliar[i][0]);
+        }
     }
     return soma;
 }
@@ -68,5 +85,3 @@ maoJogador = getMaoInicial();
 maoBot = getMaoInicial();
 
 console.log(maoJogador, maoBot);
-//pensando em como faço o bot pedir cartas enquanto a mao dele for menor que 17 e intercalar com as escolhas do jogador
-console.log(getTamanhoMao(maoBot));
