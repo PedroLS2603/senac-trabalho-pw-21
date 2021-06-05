@@ -8,6 +8,13 @@
 // bot pede cartas até ter 17 ou mais
 // comandos = hit/stand/surrender
 
+var rodada = 1;
+var pontosBot = 0;
+var pontosJogador = 0;
+var maoJogador = [];
+var maoBot = [];
+let vencedor = '';
+
 const baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'K', 'Q', 'J'];
 const naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
 
@@ -32,26 +39,36 @@ function getCartaAleatoria() {
 }
 
 //da as 2 primeiras cartas
-function getMaoInicial() {
+function getMaoInicial(maoDeAlguem) {
     let primeiraCarta = getNomeDaCarta(getCartaAleatoria(), getNaipeAleatorio());
     let segundaCarta = getNomeDaCarta(getCartaAleatoria(), getNaipeAleatorio());
-    return [primeiraCarta, segundaCarta];
+    maoDeAlguem.push(primeiraCarta, segundaCarta);
 }
 
 //da mais 1 carta
-function hitMe() {
+function hitMe(maoDeAlguem) {
     let proximaCarta = getNomeDaCarta(getCartaAleatoria(), getNaipeAleatorio());
-    return proximaCarta;
+    maoDeAlguem.push(proximaCarta);
 }
 
+//mantem a mao e muda a rodada
 function stay() {
-
+    if (rodada == 1) {
+        rodada = 2;
+    } else {
+        rodada = 1;
+    }
 }
 
+//adiciona 1 ponto ao bot e troca as mãos
 function surrender() {
-    
+    pontosBot += 1;
+    rodada = 1;
+    maoJogador = [];
+    maoBot = [];
 }
 
+//retorna a soma das cartas na mão
 function getTamanhoMao(maoDeAlguem) {
     let soma = 0;
     let arrayAuxiliar = maoDeAlguem.slice();
@@ -77,11 +94,27 @@ function getTamanhoMao(maoDeAlguem) {
     return soma;
 }
 
+//retorna o placar
+function getPlacar() {
+    return `${pontosJogador} - ${pontosBot}`
+}
 
-let maoJogador;
-let maoBot;
+//zera o placar
+function reset() {
+    rodada = 1;
+    pontosJogador = 0;
+    pontosBot = 0;
+    maoJogador = [];
+    maoBot = [];
+}
 
-maoJogador = getMaoInicial();
-maoBot = getMaoInicial();
+//vai verificar o vencedor para atribuir os pontos
+function getVencedor() {
+    if () {
+        //implementar a verificação de vitória
+        pontosJogador += 1;
+    } else {
+        pontosBot += 1;
+    }
+}
 
-console.log(maoJogador, maoBot);
