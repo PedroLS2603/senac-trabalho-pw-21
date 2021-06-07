@@ -2,7 +2,7 @@ function carregarBaralho() {
     let positionTopCarta = 0;
     let positionLeftCarta = 18;
     
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 1; i <= 5; i++) {
         const novaCarta = document.createElement('div');
         const naipe = document.createElement('img');
         const texto = document.createElement('p');
