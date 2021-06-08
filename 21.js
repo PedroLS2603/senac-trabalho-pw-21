@@ -13,10 +13,10 @@ var pontosBot = 0;
 var pontosJogador = 0;
 var maoJogador = [];
 var maoBot = [];
-let vencedorUltimaRodada = '';
+var vencedorUltimaRodada = '';
 
-const baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10,'J', 'Q', 'K'];
-const naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
+var baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
+var naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
 
 function getNomeDaCarta(carta, naipe) {
     return `${carta} ${naipe}`;
@@ -26,7 +26,7 @@ function getNaipeAleatorio() {
     let naipeAleatorio = Math.floor(Math.random() * (naipe.length));
     let imagemNaipe;
 
-    switch(naipe[naipeAleatorio]) {
+    switch (naipe[naipeAleatorio]) {
         case "Espadas":
             imagemNaipe = "images/naipeEspadas.png";
             break;
@@ -53,48 +53,80 @@ function getCartaAleatoria() {
     return baralho[cartaAleatoria];
 }
 
+function makeCarta() {
+    const carta = document.createElement('div');
+
+    carta.className = "carta";
+
+    return carta;
+}
+
 //da as 2 primeiras cartas
 function getMaoInicial() {
-    for (let i = 1; i <= 2; i++) {
-        const carta = document.createElement('div');
-
-        carta.className = "carta";
-        carta.id = `${i}`;
+    //Dando as cartas do usuario
+    for (let i = 0; i < 2; i++) {
+        carta = makeCarta()
+        carta.id = `cartaPlayer${i}`;
 
         document.getElementById('cartasJogador').appendChild(carta);
 
-        const textoCarta = document.createElement('p')
         const naipeCarta = document.createElement('img')
+
+        const textoCarta = document.createElement('p')
 
         textoCarta.innerText = getCartaAleatoria();
         naipeCarta.src = getNaipeAleatorio();
 
-        const cartasJogador = document.getElementById('cartasJogador').getElementsByClassName('carta')
+        const novaCarta = document.querySelectorAll('.campoCartas .carta')[i]
 
-
-        const novaCarta = cartasJogador[cartasJogador.length - 1]
 
         novaCarta.appendChild(naipeCarta);
         novaCarta.appendChild(textoCarta);
 
+        maoJogador.push(textoCarta.innerText)
     }
 
-    pontosJogador = getPontos();
+    //Dando as cartas do bot
+    for (let i = 0; i < 2; i++) {
+        const carta = makeCarta();
+        carta.id = `cartaBot${i}`;
 
-    console.log(pontosJogador);
+        document.getElementById('cartasBot').appendChild(carta);
+
+        const naipeCarta = document.createElement('img')
+        const textoCarta = document.createElement('p')
+
+        if (i == 0) {
+            textoCarta.innerText = "?"
+            naipeCarta.src = 'images/coringa.png';
+        }
+        else {
+            textoCarta.innerText = getCartaAleatoria();
+            naipeCarta.src = getNaipeAleatorio();
+        }
+
+        const novaCarta = document.querySelectorAll('.campoCartas .carta')[i]
+
+        novaCarta.appendChild(naipeCarta);
+        novaCarta.appendChild(textoCarta);
+
+        if(i == 0 ){
+            maoBot.push(getCartaAleatoria)
+        }
+        else {
+            maoBot.push(textoCarta.innerText)
+        }
+    }
 }
 
 //da mais 1 carta
 function hitMe() {
-
-    let ultimaCarta = document.getElementById('cartasJogador').getElementsByClassName('carta'); 
-    ultimaCarta = ultimaCarta[ultimaCarta.length - 1]   
     const carta = document.createElement('div');
+    const campoCartas = document.getElementById('cartasJogador')
 
     carta.className = "carta";
-    carta.id = parseInt(ultimaCarta.id) + 1;
 
-    document.getElementById('cartasJogador').appendChild(carta);
+    campoCartas.appendChild(carta);
 
     const textoCarta = document.createElement('p')
     const naipeCarta = document.createElement('img')
@@ -102,7 +134,7 @@ function hitMe() {
     textoCarta.innerText = getCartaAleatoria();
     naipeCarta.src = getNaipeAleatorio();
 
-    const cartasJogador = document.getElementById('cartasJogador').getElementsByClassName('carta')
+    const cartasJogador = campoCartas.getElementsByClassName('carta')
 
 
     const novaCarta = cartasJogador[cartasJogador.length - 1]
@@ -110,6 +142,7 @@ function hitMe() {
     novaCarta.appendChild(naipeCarta);
     novaCarta.appendChild(textoCarta);
 
+    maoJogador.push(textoCarta.innerText);
     rodada++;
 }
 
@@ -130,12 +163,22 @@ function surrender() {
     maoBot = [];
 
     let campoCartas = document.getElementById('cartasJogador')
-    let cartas = document.querySelectorAll('.campoCartas .carta')
-
+    let cartas = campoCartas.querySelectorAll('.carta')
 
     for(let i = 0; i < cartas.length; i++){
+        console.log(cartas);
         campoCartas.removeChild(cartas[i]);
     }
+    
+    campoCartas = document.getElementById('cartasBot')
+    cartas = campoCartas.querySelectorAll('.carta')
+
+    for (let i = 0; i < cartas.length; i++) {
+        campoCartas.removeChild(cartas[i]);
+    }
+    
+
+    document.getElementById('placar').innerText = `${pontosJogador}W - ${pontosBot}L`
 }
 
 //retorna a soma das cartas na mão
@@ -185,7 +228,7 @@ function empate() {
 }
 
 //vai verificar o vencedor para atribuir os pontos
-function getVencedor(jogador, bot) {
+function getVencedor() {
     if (getTamanhoMao(maoJogador) > 21) {
         if (getTamanhoMao(maoBot) > 21) {
             if (maoJogador < maoBot) {

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta charset="UTF-8">
+    </head>
+    <body id="teste">
+        <div id="baralho">
+            <script src="script.js" onload="carregarBaralho()"></script>
+        </div>
+        <div class="streak">
+            <a href="index.html"><button>Reset</button></a>
+            <h1 id="placar">0 W/ 0 L</h1>
+            <button onclick="surrender()">Surrender</button>
+        </div>
+        <div class="campoCartas" id="cartasBot">
+            <script src="21.js" onload="getMaoInicial();"></script>
+        </div>
+        <div class="campoCartas" id="cartasJogador">
+            <script src="21.js" onload="getMaoInicial();"></script>
+        </div>
+        <div class="comandosJogo">
+            <button onclick="hitMe()">Hit</button>
+            <button>Stand</button>
+        </div>
+        <script src="21.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
