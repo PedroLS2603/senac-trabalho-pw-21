@@ -4,37 +4,23 @@
         <link rel="stylesheet" type="text/css" href="style.css">
         <meta charset="UTF-8">
     </head>
-    <body onload="carregarBaralho()">
+    <body>
         <div id="baralho">
-            
+            <script src="script.js" onload="carregarBaralho()"></script>
         </div>
-        <div class="streak" on>
+        <div class="streak">
+            <button onclick="getMaoInicial()">Start</button>
             <button>Reset</button>
-            <button>Surrender</button>
+            <button onclick="surrender()">Surrender</button>
             <p>0 W/ 0 L</p>
         </div>
-        <div class="campoCartas">
-            <div class="carta">
-                <img src="images/naipeCopas.png">
-                <p>4</p>
-            </div>
-            <div class="carta">
-                <img src="images/naipePaus.png">
-                <p>3</p>
-            </div>
-            <div class="carta">
-                <img src="images/naipeEspadas.png">
-                <p>2</p>
-            </div>
-            <div class="carta">
-                <img src="images/naipeOuros.png">
-                <p>A</p>
-            </div>
+        <div class="campoCartas" id="cartasJogador">
         </div>
         <div class="comandosJogo">
-            <button>Hit</button>
+            <button onclick="hitMe()">Hit</button>
             <button>Stand</button>
         </div>
+        <script src="21.js"></script>
         <script src="script.js"></script>
     </body>
 </html>

@@ -15,7 +15,7 @@ var maoJogador = [];
 var maoBot = [];
 let vencedorUltimaRodada = '';
 
-const baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'K', 'Q', 'J'];
+const baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10,'J', 'Q', 'K'];
 const naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
 
 function getNomeDaCarta(carta, naipe) {
@@ -23,15 +23,30 @@ function getNomeDaCarta(carta, naipe) {
 }
 
 function getNaipeAleatorio() {
-    let naipeAleatorio = Math.floor(Math.random()*(naipe.length));
-    if (naipeAleatorio < 0) {
-        return naipe[0];
+    let naipeAleatorio = Math.floor(Math.random() * (naipe.length));
+    let imagemNaipe;
+
+    switch(naipe[naipeAleatorio]) {
+        case "Espadas":
+            imagemNaipe = "images/naipeEspadas.png";
+            break;
+        case "Copas":
+            imagemNaipe = "images/naipeCopas.png";
+            break;
+        case "Ouros":
+            imagemNaipe = "images/naipeOuros.png";
+            break;
+        case "Paus":
+            imagemNaipe = "images/naipePaus.png";
+            break;
     }
-    return naipe[naipeAleatorio];
+
+    return imagemNaipe;
+
 }
 
 function getCartaAleatoria() {
-    let cartaAleatoria = Math.floor(Math.random()*(baralho.length));
+    let cartaAleatoria = Math.floor(Math.random() * (baralho.length));
     if (cartaAleatoria < 0) {
         return baralho[0];
     }
@@ -39,16 +54,63 @@ function getCartaAleatoria() {
 }
 
 //da as 2 primeiras cartas
-function getMaoInicial(maoDeAlguem) {
-    let primeiraCarta = getNomeDaCarta(getCartaAleatoria(), getNaipeAleatorio());
-    let segundaCarta = getNomeDaCarta(getCartaAleatoria(), getNaipeAleatorio());
-    maoDeAlguem.push(primeiraCarta, segundaCarta);
+function getMaoInicial() {
+    for (let i = 1; i <= 2; i++) {
+        const carta = document.createElement('div');
+
+        carta.className = "carta";
+        carta.id = `${i}`;
+
+        document.getElementById('cartasJogador').appendChild(carta);
+
+        const textoCarta = document.createElement('p')
+        const naipeCarta = document.createElement('img')
+
+        textoCarta.innerText = getCartaAleatoria();
+        naipeCarta.src = getNaipeAleatorio();
+
+        const cartasJogador = document.getElementById('cartasJogador').getElementsByClassName('carta')
+
+
+        const novaCarta = cartasJogador[cartasJogador.length - 1]
+
+        novaCarta.appendChild(naipeCarta);
+        novaCarta.appendChild(textoCarta);
+
+    }
+
+    pontosJogador = getPontos();
+
+    console.log(pontosJogador);
 }
 
 //da mais 1 carta
-function hitMe(maoDeAlguem) {
-    let proximaCarta = getNomeDaCarta(getCartaAleatoria(), getNaipeAleatorio());
-    maoDeAlguem.push(proximaCarta);
+function hitMe() {
+
+    let ultimaCarta = document.getElementById('cartasJogador').getElementsByClassName('carta'); 
+    ultimaCarta = ultimaCarta[ultimaCarta.length - 1]   
+    const carta = document.createElement('div');
+
+    carta.className = "carta";
+    carta.id = parseInt(ultimaCarta.id) + 1;
+
+    document.getElementById('cartasJogador').appendChild(carta);
+
+    const textoCarta = document.createElement('p')
+    const naipeCarta = document.createElement('img')
+
+    textoCarta.innerText = getCartaAleatoria();
+    naipeCarta.src = getNaipeAleatorio();
+
+    const cartasJogador = document.getElementById('cartasJogador').getElementsByClassName('carta')
+
+
+    const novaCarta = cartasJogador[cartasJogador.length - 1]
+
+    novaCarta.appendChild(naipeCarta);
+    novaCarta.appendChild(textoCarta);
+
+    rodada++;
 }
 
 //mantem a mao e muda a rodada
@@ -66,6 +128,14 @@ function surrender() {
     rodada = 1;
     maoJogador = [];
     maoBot = [];
+
+    let campoCartas = document.getElementById('cartasJogador')
+    let cartas = document.querySelectorAll('.campoCartas .carta')
+
+
+    for(let i = 0; i < cartas.length; i++){
+        campoCartas.removeChild(cartas[i]);
+    }
 }
 
 //retorna a soma das cartas na mão
@@ -87,7 +157,7 @@ function getTamanhoMao(maoDeAlguem) {
             }
         } else if (arrayAuxiliar[i].includes(10)) {
             soma += 10;
-        }else {
+        } else {
             soma += parseInt(arrayAuxiliar[i][0]);
         }
     }

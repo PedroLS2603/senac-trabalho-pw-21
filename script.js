@@ -28,9 +28,5 @@ function carregarBaralho() {
 
         lastCard.appendChild(naipe)
         lastCard.appendChild(texto)
-
     }
-
-
-
 }
