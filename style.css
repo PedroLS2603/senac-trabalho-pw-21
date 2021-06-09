@@ -1,16 +1,19 @@
 body {
-    background-color: #228B22;
+    background-color: #121212;
     font-family: Helvetica;
+    cursor: url('images/cursor.cur'), default;
 }
 
 button {
-    font-size: 1.8rem;
-    background-color: rgba(255, 0 , 0, .8);
-    color: white;
+    font-size: 1.8vw;
+    min-width: 110px;
+    max-height: 48px;
+    background-color: #960000;
+    color: whitesmoke;
     border: 1px solid black;
     border-radius: 15px;
     padding: 10px 20px 10px 20px;
-    cursor: pointer;
+    cursor: pointer; 
     opacity: .9;
 }
 
@@ -18,17 +21,16 @@ button:hover {
     opacity: 1;
 }
 
-.comandosJogo{
+.opcoes{
     position: absolute;
-    bottom: 25%;
-    left: 80px;
-    margin-bottom: -50px;
     display: flex;
     flex-direction: column;
     width: 110px;
+    top: 47px;
+    right: 50px;
 }
 
-.comandosJogo button {
+.opcoes button {
     margin-bottom: 10px;
 }
 
@@ -56,8 +58,9 @@ button:hover {
 .campoCartas {
     display: flex;
     align-items: center;
+    background-color: #101010 ;
     justify-content: space-evenly;
-    border: 2px solid #FFFF00;
+    border: 2px solid whitesmoke;
     border-radius: 15px;
     width: 805px;
     height: 184px;
@@ -78,17 +81,16 @@ button:hover {
 }
 
 .campoCartas .carta {
-    box-shadow: 0px 0px 10px #181818;
     cursor: pointer;
     transition: .6s;
 }
 
 .campoCartas .carta:hover {
-    box-shadow: 5px 10px 10px #181818;
+    box-shadow: 0px 0px 10px whitesmoke;
 }
 
 .carta {
-    border: 2px solid black;
+    border: 2px solid whitesmoke;
     border-radius: 5px;
     background-color: #262626;
     height: 144px;

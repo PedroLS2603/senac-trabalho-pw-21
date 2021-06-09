@@ -3,15 +3,17 @@
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
         <meta charset="UTF-8">
+        <title>Blackjack</title>
+        <link rel="shortcut icon" href="https://i.ibb.co/WPVrDcN/bigodudo.png">
     </head>
     <body id="teste">
         <div id="baralho">
             <script src="script.js" onload="carregarBaralho()"></script>
         </div>
         <div class="streak">
-            <a href="index.html"><button>Reset</button></a>
-            <h1 id="placar">0 W/ 0 L</h1>
-            <button onclick="surrender()">Surrender</button>
+            <button onclick="hitMe()">+1</button>
+            <h1 id="placar">0W - 0L</h1>
+            <button>Stand</button>  
         </div>
         <div class="campoCartas" id="cartasBot">
             <script src="21.js" onload="getMaoInicial();"></script>
@@ -19,9 +21,10 @@
         <div class="campoCartas" id="cartasJogador">
             <script src="21.js" onload="getMaoInicial();"></script>
         </div>
-        <div class="comandosJogo">
-            <button onclick="hitMe()">Hit</button>
-            <button>Stand</button>
+        <div class="opcoes">
+            <button onclick="surrender()">Render</button>
+            <button onclick="reset()">Reset</button>
+            <a href="index.html"><button>Sair</button></a>
         </div>
         <script src="21.js"></script>
         <script src="script.js"></script>
