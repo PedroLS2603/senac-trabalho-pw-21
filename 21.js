@@ -167,15 +167,12 @@ function limparCartas() {
 
 //adiciona 1 ponto ao bot e zera as mãos
 function surrender() {
-    pontosBot += 1;
-    rodada = 1;
-    maoJogador = [];
-    maoBot = [];
+    pontosBot ++;
 
-
+    getPlacar();
+    resetMao()
     limparCartas();
     getMaoInicial();
-    getPlacar();
 }
 
 //retorna a soma das cartas na mão
@@ -206,19 +203,18 @@ function getTamanhoMao(maoDeAlguem) {
 
 //retorna o placar
 function getPlacar() {
-    document.getElementById('placar').innerText = `${pontosJogador}W - ${pontosBot}L`
+    document.getElementById('placar').innerText = `${pontosJogador}W - ${pontosBot}L`;
 }
 
 //zera o placar
 function reset() {
-    rodada = 1;
     pontosJogador = 0;
     pontosBot = 0;
-    resetMao();
 
+    getPlacar();
+    resetMao();
     limparCartas();
     getMaoInicial();
-    getPlacar();
 }
 
 function resetMao() {
@@ -227,9 +223,7 @@ function resetMao() {
 }
 
 function empate() {
-    maoBot = [];
-    maoJogador = [];
-    rodada = 1;
+    resetMao();
 }
 
 //vai verificar o vencedor para atribuir os pontos

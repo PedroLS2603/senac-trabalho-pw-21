@@ -1,11 +1,10 @@
 body {
     background-color: #121212;
     font-family: Helvetica;
-    cursor: url('images/cursor.cur'), default;
 }
 
 button {
-    font-size: 1.8vw;
+    font-size: 3vh;
     min-width: 110px;
     max-height: 48px;
     background-color: #960000;
@@ -35,7 +34,7 @@ button:hover {
 }
 
 
-.streak {
+.comandosJogo {
     height: 57px;
     width: 500px;
     display: flex;
@@ -49,7 +48,7 @@ button:hover {
     margin-left: -250px;
 }
 
-.streak h1 {
+.comandosJogo h1 {
     font-size: 2rem;
     padding: 3px;
     color: whitesmoke;
@@ -69,13 +68,13 @@ button:hover {
 }
 
 #cartasJogador {
-    bottom: 100px;
+    bottom: 12%;
     left: 50%;
     margin-left: -402.5px;
 }
 
 #cartasBot {
-    bottom: 450px;
+    top: 8%;
     left: 50%;
     margin-left: -402.5px;
 }
@@ -105,8 +104,7 @@ button:hover {
 }
 
 #baralho {
-    position: relative;
-    top: 210px;
+    position: absolute;
+    top: 37%;
     left: 50px;
-    margin-left: -46px;
 }
