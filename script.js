@@ -7,8 +7,8 @@ function carregarBaralho() {
         const naipe = document.createElement('img');
         const texto = document.createElement('p');
 
-        positionTopCarta += 1;
-        positionLeftCarta -= 1;
+        positionTopCarta -= 3;
+        positionLeftCarta += 3;
 
         novaCarta.className = "carta";
 
@@ -28,9 +28,5 @@ function carregarBaralho() {
 
         lastCard.appendChild(naipe)
         lastCard.appendChild(texto)
-
     }
-
-
-
 }
