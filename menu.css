@@ -6,18 +6,4 @@ h1 {
     color:blanchedalmond;
 }
 
-a {
-    color: blanchedalmond;
-    text-decoration: none;
-    font-size: 2rem;
-    border: 1px solid black;
-    padding: 5px 25px 4px 25px;
-    background: rgba(255, 0, 0, .9);
-    opacity: .8;
-    transition: .6s;
-}
-
-a:hover {
-    opacity: 1;
-}
 
