@@ -1,11 +1,10 @@
-var rodada;
 var pontosBot = 0;
 var pontosJogador = 0;
-var maoJogador = [];
-var maoBot = [];
-var vencedorUltimaRodada;
+var botJogou;
+let maoJogador = [];
+let maoBot = [];
 
-const baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
+const baralho = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 const naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
 
 function getNomeDaCarta(carta, naipe) {
@@ -101,20 +100,44 @@ function getMaoInicial() {
         novaCarta.appendChild(textoCarta);
 
         if (i == 0) {
-            maoBot.push(getCartaAleatoria())
+            maoBot.push(getCartaAleatoria());
         }
         else {
-            maoBot.push(parseInt(textoCarta.innerText))
+            maoBot.push(textoCarta.innerText);
         }
 
     }
-    getVencedor();
 }
 
-//da mais 1 carta
-function hitMe() {
+function getTamanhoMao(maoDeAlguem) {
+    let soma = 0;
+    let arrayAuxiliar = maoDeAlguem.slice();
+    for (let i = 0; i < maoDeAlguem.length; i++) {
+        if (arrayAuxiliar[i][0] == 'K' || arrayAuxiliar[i][0] == 'Q' || arrayAuxiliar[i][0] == 'J') {
+            soma += parseInt(10);
+        } else if (arrayAuxiliar[i][0] == 'A') {
+            if (arrayAuxiliar.includes('K')) {
+                soma += parseInt(11);
+            } else if (arrayAuxiliar.includes('Q')) {
+                soma += parseInt(11);
+            } else if (arrayAuxiliar.includes('J')) {
+                soma += parseInt(11);
+            } else {
+                soma += parseInt(11);
+            }
+        } else if (arrayAuxiliar.includes(10)) {
+            soma += parseInt(10);
+        } else {
+            soma += parseInt(arrayAuxiliar[i][0]);
+        }
+    }
+    return soma;
+}
+
+function jogadaBot() {
+    if (getTamanhoMao(maoBot) < 17) {
         const carta = document.createElement('div');
-        const campoCartas = document.getElementById('cartasJogador')
+        const campoCartas = document.getElementById('cartasBot')
 
         carta.className = "carta";
 
@@ -126,25 +149,59 @@ function hitMe() {
         valorCarta.innerText = getCartaAleatoria();
         naipeCarta.src = getNaipeAleatorio();
 
-        const cartasJogador = campoCartas.getElementsByClassName('carta')
+        const cartasBot = campoCartas.getElementsByClassName('carta')
 
 
-        const novaCarta = cartasJogador[cartasJogador.length - 1]
+        const novaCarta = cartasBot[cartasBot.length - 1]
 
         novaCarta.appendChild(naipeCarta);
         novaCarta.appendChild(valorCarta);
 
-        maoJogador.push(valorCarta.innerText);
-        
-        getVencedor();
+        maoBot.push(valorCarta.innerText);
+
+        botJogou = true;
+        return botJogou;
+    } else {
+        botJogou = false;
+        return botJogou;
     }
+}
+
+//da mais 1 carta
+function hitMe() {
+    const carta = document.createElement('div');
+    const campoCartas = document.getElementById('cartasJogador')
+
+    carta.className = "carta";
+
+    campoCartas.appendChild(carta);
+
+    const valorCarta = document.createElement('p')
+    const naipeCarta = document.createElement('img')
+
+    valorCarta.innerText = getCartaAleatoria();
+    naipeCarta.src = getNaipeAleatorio();
+
+    const cartasJogador = campoCartas.getElementsByClassName('carta')
+
+
+    const novaCarta = cartasJogador[cartasJogador.length - 1]
+
+    novaCarta.appendChild(naipeCarta);
+    novaCarta.appendChild(valorCarta);
+
+    maoJogador.push(valorCarta.innerText);
+}
 
 //mantem a mao e muda a rodada
 function stay() {
-    if (rodada == 1) {
-        rodada = 2;
-    } else {
-        rodada = 1;
+    jogadaBot();
+    if (botJogou== false) {
+        getVencedor();
+        getPlacar();
+        limparCartas();
+        resetMao();
+        getMaoInicial();
     }
 }
 
@@ -176,30 +233,7 @@ function surrender() {
 }
 
 //retorna a soma das cartas na mão
-function getTamanhoMao(maoDeAlguem) {
-    let soma = 0;
-    let arrayAuxiliar = maoDeAlguem.slice();
-    for (let i = 0; i < maoDeAlguem.length; i++) {
-        if (arrayAuxiliar[i][0] == 'K' || arrayAuxiliar[i][0] == 'Q' || arrayAuxiliar[i][0] == 'J') {
-            soma += 10;
-        } else if (arrayAuxiliar[i][0] == 'A') {
-            if (arrayAuxiliar.includes('K')) {
-                soma += 11;
-            } else if (arrayAuxiliar.includes('Q')) {
-                soma += 11;
-            } else if (arrayAuxiliar.includes('J')) {
-                soma += 11;
-            } else {
-                soma += 1;
-            }
-        } else if (arrayAuxiliar[i].includes(10)) {
-            soma += 10;
-        } else {
-            soma += parseInt(arrayAuxiliar[i][0]);
-        }
-    }
-    return soma;
-}
+
 
 //retorna o placar
 function getPlacar() {
@@ -228,18 +262,26 @@ function empate() {
 
 //vai verificar o vencedor para atribuir os pontos
 function getVencedor() {
-    if(getTamanhoMao(maoJogador) > 21 || getTamanhoMao(maoBot) < 21) {
-        pontosBot++;
-        alert("Bot venceu");
+    if (getTamanhoMao(maoJogador) > 21 || getTamanhoMao(maoBot) > 21) {
+        if (getTamanhoMao(maoBot) > getTamanhoMao(maoJogador)) {
+            pontosJogador++;
+            alert('Jogador');
+        } else {
+            pontosBot++;
+            alert('Bot');
+        }
     }
-    else if(getTamanhoMao(maoJogador) == 21 || getTamanhoMao(maoBot) > 21){
-        pontosJogador++;
-        alert("Jogador venceu");
+    else if (getTamanhoMao(maoJogador) == getTamanhoMao(maoBot)) {
+        empate();
+        alert('Empate');
     }
-
-    limparCartas();
-    getPlacar();
-    resetMao();
-    getMaoInicial();
+    else if (getTamanhoMao(maoJogador) <= 21 || getTamanhoMao(maoBot) <= 21) {
+        if (getTamanhoMao(maoJogador) > getTamanhoMao(maoBot)) {
+            pontosJogador++;
+            alert('Jogador');
+        } else {
+            pontosBot++;
+            alert('Bot');
+        }
+    } 
 }
-
