@@ -1,16 +1,10 @@
-var rodada;
 var pontosBot = 0;
 var pontosJogador = 0;
-var maoJogador = [];
-var maoBot = [];
-var vencedorUltimaRodada;
+let maoJogador = [];
+let maoBot = [];
 
-const baralho = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
-const naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
-
-function getNomeDaCarta(carta, naipe) {
-    return `${carta} ${naipe}`;
-}
+var baralho = ['A', 2, 3, 4, 5, 6, 7 , 8, 9, 10, 'Q', 'K','J'];
+var naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
 
 function getNaipeAleatorio() {
     let naipeAleatorio = Math.floor(Math.random() * (naipe.length));
@@ -51,11 +45,9 @@ function makeCarta() {
     return carta;
 }
 
-//da as 2 primeiras cartas
-function getMaoInicial() {
-    //Dando as cartas do usuario
+function getMaoUsuario() {
     for (let i = 0; i < 2; i++) {
-        carta = makeCarta()
+        const carta = makeCarta()
         carta.id = `cartaPlayer${i}`;
 
         document.getElementById('cartasJogador').appendChild(carta);
@@ -75,8 +67,9 @@ function getMaoInicial() {
 
         maoJogador.push(textoCarta.innerText)
     }
+}
 
-    //Dando as cartas do bot
+function getMaoBot() {
     for (let i = 0; i < 2; i++) {
         const carta = makeCarta();
         carta.id = `cartaBot${i}`;
@@ -101,20 +94,60 @@ function getMaoInicial() {
         novaCarta.appendChild(textoCarta);
 
         if (i == 0) {
-            maoBot.push(getCartaAleatoria())
+            maoBot.push(getCartaAleatoria().toString())
         }
         else {
-            maoBot.push(parseInt(textoCarta.innerText))
+            maoBot.push(textoCarta.innerText)
         }
-
     }
+}
+
+//da as 2 primeiras cartas
+function getMaoInicial() {
+    
+    //Dando as cartas do usuario
+    getMaoUsuario();
+    //Dando as cartas do bot
+    getMaoBot();
+
+    console.log(maoBot);
+    console.log(getTamanhoMao(maoBot));
+
     getVencedor();
 }
 
 //da mais 1 carta
 function hitMe() {
+    const carta = makeCarta();
+    const campoCartas = document.getElementById('cartasJogador')
+
+    campoCartas.appendChild(carta);
+
+    const valorCarta = document.createElement('p')
+    const naipeCarta = document.createElement('img')
+
+    valorCarta.innerText = getCartaAleatoria();
+    naipeCarta.src = getNaipeAleatorio();
+
+    const cartasJogador = campoCartas.getElementsByClassName('carta')
+
+
+    const novaCarta = cartasJogador[cartasJogador.length - 1]
+
+    novaCarta.appendChild(naipeCarta);
+    novaCarta.appendChild(valorCarta);
+
+    maoJogador.push(valorCarta.innerText);
+
+    botMove();
+
+    getVencedor();
+}
+
+function botMove() {
+    if (getTamanhoMao(maoBot) <= 17) {
         const carta = document.createElement('div');
-        const campoCartas = document.getElementById('cartasJogador')
+        const campoCartas = document.getElementById('cartasBot')
 
         carta.className = "carta";
 
@@ -126,26 +159,23 @@ function hitMe() {
         valorCarta.innerText = getCartaAleatoria();
         naipeCarta.src = getNaipeAleatorio();
 
-        const cartasJogador = campoCartas.getElementsByClassName('carta')
+        const cartasBot = campoCartas.getElementsByClassName('carta')
 
 
-        const novaCarta = cartasJogador[cartasJogador.length - 1]
+        const novaCarta = cartasBot[cartasBot.length - 1]
 
         novaCarta.appendChild(naipeCarta);
         novaCarta.appendChild(valorCarta);
 
-        maoJogador.push(valorCarta.innerText);
-        
-        getVencedor();
+        maoBot.push(valorCarta.innerText);
     }
+    console.log(maoBot);
+}
 
 //mantem a mao e muda a rodada
-function stay() {
-    if (rodada == 1) {
-        rodada = 2;
-    } else {
-        rodada = 1;
-    }
+function stand() {
+    botMove();
+    getVencedor();
 }
 
 function limparCartas() {
@@ -153,7 +183,6 @@ function limparCartas() {
     let cartas = campoCartas.querySelectorAll('.carta')
 
     for (let i = 0; i < cartas.length; i++) {
-        console.log(cartas);
         campoCartas.removeChild(cartas[i]);
     }
 
@@ -166,8 +195,8 @@ function limparCartas() {
 }
 
 //adiciona 1 ponto ao bot e zera as mãos
-function surrender() {
-    pontosBot ++;
+function render() {
+    pontosBot++;
 
     getPlacar();
     resetMao()
@@ -226,20 +255,46 @@ function empate() {
     resetMao();
 }
 
-//vai verificar o vencedor para atribuir os pontos
-function getVencedor() {
-    if(getTamanhoMao(maoJogador) > 21 || getTamanhoMao(maoBot) < 21) {
-        pontosBot++;
-        alert("Bot venceu");
-    }
-    else if(getTamanhoMao(maoJogador) == 21 || getTamanhoMao(maoBot) > 21){
-        pontosJogador++;
-        alert("Jogador venceu");
-    }
-
-    limparCartas();
+function encerrar() {
     getPlacar();
     resetMao();
+    limparCartas();
     getMaoInicial();
 }
 
+//vai verificar o vencedor para atribuir os pontos
+function getVencedor() {
+    if (getTamanhoMao(maoJogador) > 21 || getTamanhoMao(maoBot) > 21) {
+        if (getTamanhoMao(maoBot) > getTamanhoMao(maoJogador)) {
+            pontosJogador++;
+            console.log('Jogador');
+            encerrar()
+
+        } else if (getTamanhoMao(maoJogador) == getTamanhoMao(maoBot)) {
+            empate();
+            console.log('Empate');
+            encerrar()
+        }
+        else {
+            pontosBot++;
+            console.log('Bot');
+            encerrar()
+        }
+    }
+    else if (getTamanhoMao(maoJogador) == 21 || getTamanhoMao(maoBot) == 21) {
+        if (getTamanhoMao(maoJogador) > getTamanhoMao(maoBot)) {
+            pontosJogador++;
+            console.log('Jogador');
+            encerrar()
+        } else if (getTamanhoMao(maoJogador) == getTamanhoMao(maoBot)) {
+            empate();
+            console.log('Empate');
+            encerrar()
+        } 
+        else {
+            pontosBot++;
+            console.log('Bot');
+            encerrar()
+        }
+    }
+}
