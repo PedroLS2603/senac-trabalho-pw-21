@@ -2,8 +2,10 @@ var pontosBot = 0;
 var pontosJogador = 0;
 let maoJogador = [];
 let maoBot = [];
+var resultado;
+var comando;
 
-var baralho = ['A', 2, 3, 4, 5, 6, 7 , 8, 9, 10, 'Q', 'K','J'];
+var baralho = ['A', 2, 3, 4, 5, 6, 7];
 var naipe = ['Espadas', 'Copas', 'Paus', 'Ouros'];
 
 function getNaipeAleatorio() {
@@ -112,8 +114,6 @@ function getMaoInicial() {
 
     console.log(maoBot);
     console.log(getTamanhoMao(maoBot));
-
-    getVencedor();
 }
 
 //da mais 1 carta
@@ -144,36 +144,45 @@ function hitMe() {
     getVencedor();
 }
 
+function hitBot () {
+    const carta = document.createElement('div');
+    const campoCartas = document.getElementById('cartasBot')
+
+    carta.className = "carta";
+
+    campoCartas.appendChild(carta);
+
+    const valorCarta = document.createElement('p')
+    const naipeCarta = document.createElement('img')
+
+    valorCarta.innerText = getCartaAleatoria();
+    naipeCarta.src = getNaipeAleatorio();
+
+    const cartasBot = campoCartas.getElementsByClassName('carta')
+
+
+    const novaCarta = cartasBot[cartasBot.length - 1]
+
+    novaCarta.appendChild(naipeCarta);
+    novaCarta.appendChild(valorCarta);
+
+    maoBot.push(valorCarta.innerText);
+}
+
 function botMove() {
+    while(comando == 'stand') {
+        hitBot();
+        getVencedor();
+    }   
     if (getTamanhoMao(maoBot) <= 17) {
-        const carta = document.createElement('div');
-        const campoCartas = document.getElementById('cartasBot')
-
-        carta.className = "carta";
-
-        campoCartas.appendChild(carta);
-
-        const valorCarta = document.createElement('p')
-        const naipeCarta = document.createElement('img')
-
-        valorCarta.innerText = getCartaAleatoria();
-        naipeCarta.src = getNaipeAleatorio();
-
-        const cartasBot = campoCartas.getElementsByClassName('carta')
-
-
-        const novaCarta = cartasBot[cartasBot.length - 1]
-
-        novaCarta.appendChild(naipeCarta);
-        novaCarta.appendChild(valorCarta);
-
-        maoBot.push(valorCarta.innerText);
+        hitBot();
     }
-    console.log(maoBot);
+    getVencedor();
 }
 
 //mantem a mao e muda a rodada
 function stand() {
+    comando = 'stand';
     botMove();
     getVencedor();
 }
@@ -197,11 +206,11 @@ function limparCartas() {
 //adiciona 1 ponto ao bot e zera as mãos
 function render() {
     pontosBot++;
+    resultado = 'Você perdeu'
 
+    popUp();
     getPlacar();
-    resetMao()
-    limparCartas();
-    getMaoInicial();
+    resetMao();
 }
 
 //retorna a soma das cartas na mão
@@ -258,8 +267,6 @@ function empate() {
 function encerrar() {
     getPlacar();
     resetMao();
-    limparCartas();
-    getMaoInicial();
 }
 
 //vai verificar o vencedor para atribuir os pontos
@@ -267,34 +274,65 @@ function getVencedor() {
     if (getTamanhoMao(maoJogador) > 21 || getTamanhoMao(maoBot) > 21) {
         if (getTamanhoMao(maoBot) > getTamanhoMao(maoJogador)) {
             pontosJogador++;
-            console.log('Jogador');
+            resultado = 'Você venceu';
+            comando = 'parar';
             encerrar()
+            popUp()
 
         } else if (getTamanhoMao(maoJogador) == getTamanhoMao(maoBot)) {
             empate();
-            console.log('Empate');
+            resultado = 'Empate';
+            comando = 'parar'
             encerrar()
+            popUp()
         }
         else {
             pontosBot++;
-            console.log('Bot');
-            encerrar()
+            resultado = 'Você perdeu';
+            comando = 'parar'
+            encerrar();
+            popUp();
         }
     }
     else if (getTamanhoMao(maoJogador) == 21 || getTamanhoMao(maoBot) == 21) {
         if (getTamanhoMao(maoJogador) > getTamanhoMao(maoBot)) {
             pontosJogador++;
-            console.log('Jogador');
-            encerrar()
+            resultado = 'Você venceu';
+            comando = 'parar'
+            encerrar();
+            popUp();
         } else if (getTamanhoMao(maoJogador) == getTamanhoMao(maoBot)) {
             empate();
-            console.log('Empate');
-            encerrar()
+            comando = 'parar'
+            resultado = 'Empate';
+            encerrar();
+            popUp();
         } 
         else {
             pontosBot++;
-            console.log('Bot');
-            encerrar()
+            comando = 'parar'
+            resultado = 'Você perdeu';
+            encerrar();
+            popUp();
+
         }
     }
+}
+
+function popUp() {
+    document.getElementById('resultado').innerText = `${resultado}!`
+
+    document.getElementById('jogo').style.opacity = '.3';
+    document.getElementById('popUp').style.visibility = 'visible';
+    document.getElementById('placar').style.visibility = 'hidden';
+
+}
+
+function continuarJogando() {
+    document.getElementById('jogo').style.opacity = '1';
+    document.getElementById('popUp').style.visibility = 'hidden';
+    document.getElementById('placar').style.visibility = 'visible';
+
+    limparCartas();
+    getMaoInicial();
 }
