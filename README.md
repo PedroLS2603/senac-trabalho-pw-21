@@ -1,14 +1,16 @@
-# Blackjack
+# Blackjack (21)
 
+Projeto desenvolvido como trabalho para conclusão da disciplina de Programação Web I do Centro Universitário Senac
 
 ## Modalidade
-### Jogador vs Bot (dealer)
+
+Jogador vs Bot (dealer)
 
 
 ## Valores
-Cartas de face (K, Q, J) | Numéricas | A     
+ A | Numéricas | Cartas de face (K, Q, J)      
 :------: | :------: | :------:  
-10 | O próprio valor | 1 ou 11 (caso esteja acompanhada de uma carta de face)
+1 ou 11 (caso esteja acompanhada de uma carta de face) | O próprio valor | 10   
 
 ## Funcionalidades  
 Hit | Stand | Reset | Render    
