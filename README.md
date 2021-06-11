@@ -1,25 +1,19 @@
 # Blackjack
 
-***
 
 ## Modalidade
 ### Jogador vs Bot (dealer)
 
-***
 
 ## Valores
 Cartas de face (K, Q, J) | Numéricas | A     
 :------: | :------: | :------:  
 10 | O próprio valor | 1 ou 11 (caso esteja acompanhada de uma carta de face)
 
-***
-
 ## Funcionalidades  
 Hit | Stand | Reset | Render    
 :------: | :------: | :------: | :------:  
 Permite adicionar mais uma carta | Encerra suas jogadas durante a partida | Zera o valor do placar das partidas sequenciais | Desiste da partida
-
-***
 
 ## Regras
 
