@@ -6,7 +6,17 @@ h1 {
     color:whitesmoke;
 }
 
-.cards{
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header img {
+    width: 200px;
+}
+
+main{
     display:flex;
     justify-content: space-between;
     padding: 0px 90px 0px 90px;
