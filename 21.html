@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <meta charset="UTF-8">
-        <title>Blackjack</title>
-        <link rel="shortcut icon" href="https://i.ibb.co/WPVrDcN/bigodudo.png">
-    </head>
-    <body id="teste">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <title>Blackjack</title>
+    <link rel="shortcut icon" href="https://i.ibb.co/WPVrDcN/bigodudo.png">
+</head>
+<body>
+    <div class="popUp" id="popUp">
+        <p id="resultado"></p>
+        <p>Deseja continuar jogando?</p>
+        <div class="botoesPopUp">
+            <button onclick="continuarJogando()">Sim</button>
+            <a href="index.html"><button>Não</button></a>
+        </div>
+    </div>
+    <main id="jogo">
         <div id="baralho">
-            <script src="script.js" onload="carregarBaralho()"></script>
+            <script src="21.js" onload="carregarBaralho()"></script>
         </div>
         <div class="comandosJogo">
             <button onclick="hitMe()">+1</button>
-            <h1 id="placar">0W - 0L</h1>
-            <button>Stand</button>  
+            <h1 id="placar">0W - 0E - 0L</h1>
+            <button onclick="stand()">Stand</button>
         </div>
         <div class="campoCartas" id="cartasBot">
             <script src="21.js" onload="getMaoInicial();"></script>
@@ -22,11 +31,11 @@
             <script src="21.js" onload="getMaoInicial();"></script>
         </div>
         <div class="opcoes">
-            <button onclick="surrender()">Render</button>
+            <button onclick="render()">Render</button>
             <button onclick="reset()">Reset</button>
             <a href="index.html"><button>Sair</button></a>
         </div>
-        <script src="21.js"></script>
-        <script src="script.js"></script>
-    </body>
+    </main>
+    <script src="21.js"></script>
+</body>
 </html>
